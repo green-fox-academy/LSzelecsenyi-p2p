@@ -14,9 +14,9 @@ public class RestCont {
     private ChatRepository chatRepository;
 
     @PostMapping("/savemessage")
-    public String postMessage(@RequestParam("message") String message) {
+    public Message postMessage(@RequestParam("message") String message) {
         Message firstMessage = new Message(message);
         chatRepository.save(firstMessage);
-        return "redirect:/chat";
+        return firstMessage;
     }
 }
