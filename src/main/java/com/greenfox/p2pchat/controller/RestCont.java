@@ -13,7 +13,7 @@ public class RestCont {
     @Autowired
     private ChatRepository chatRepository;
 
-    @PostMapping("/savemessage}")
+    @PostMapping("/savemessage")
     public Message postMessage(@RequestParam("message") String message) {
         Message firstMessage = new Message(message);
         chatRepository.save(firstMessage);
