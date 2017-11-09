@@ -1,17 +1,8 @@
-out
-.class
-.idea/**/gradle.xml
-.idea/**/libraries
-.gradle
-gradle-app.setting
-!gradle-wrapper.jar
-.gradletasknamecache
-.idea/
+.idea
 out
 *.xml
 *.iml
-<<<<<<< HEAD
-.gf.json
-=======
-.gf.json
->>>>>>> 24b2d638a2df379b07a4ab01e808b84153fc2f83
+*.class
+
+.gradle
+!gradle-wrapper.properties
