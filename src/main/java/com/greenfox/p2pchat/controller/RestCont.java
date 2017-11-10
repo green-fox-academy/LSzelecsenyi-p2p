@@ -35,7 +35,7 @@ public class RestCont {
     }
 
     @RequestMapping("/seelog")
-    public Log home(HttpServletRequest request) {
+    public String home(HttpServletRequest request) {
         Log log = new Log(request);
         logRepository.save(log);
         System.out.println(log);
