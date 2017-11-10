@@ -18,6 +18,9 @@ public class Message {
         this.message = message;
     }
 
+    public Message() {
+    }
+
     public long getId() {
         return id;
     }
