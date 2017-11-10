@@ -39,7 +39,7 @@ public class RestCont {
         Log log = new Log(request);
         logRepository.save(log);
         System.out.println(log);
-        return log;
+        return log.toString();
     }
 
 
