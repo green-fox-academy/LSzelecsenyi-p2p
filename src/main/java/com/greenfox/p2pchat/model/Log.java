@@ -1,20 +1,16 @@
 package com.greenfox.p2pchat.model;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Component
 @Entity
 public class Log {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String path;
@@ -26,19 +22,28 @@ public class Log {
     public Log() {
     }
 
-    public Log(HttpServletRequest request) {
+    public Log(HttpServletRequest request, String requestData) {
         this.path = request.getServletPath();
         this.method = request.getMethod();
-        this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+        this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
         this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
         this.requestData = request.getQueryString();
     }
 
-//    2017-05-16 21:47:19.040 INFO Request /message POST text=apple
+    public Log(HttpServletRequest request) {
+        this.path = request.getServletPath();
+        this.method = request.getMethod();
+        this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
+    }
 
     @Override
     public String toString() {
-        return dateTime + " " + logLevel + " " + path + " " + method + " " + requestData;
+        if (requestData == null) {
+            return dateTime + " " + logLevel + " " + path + " " + method + "\n";
+        } else {
+            return dateTime + " " + logLevel + " " + path + " " + method + " " + requestData + "\n";
+        }
     }
 
     public long getId() {
