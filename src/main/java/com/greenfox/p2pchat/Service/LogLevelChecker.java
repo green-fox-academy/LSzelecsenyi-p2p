@@ -2,7 +2,9 @@ package com.greenfox.p2pchat.Service;
 
 import com.greenfox.p2pchat.model.Log;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LogLevelChecker {
 
     public boolean checkLogLevel() {

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Enter</title>
+</head>
+<body>
+    <h1>Enter</h1>
+    <form th:action="@{/chat/adduser}" th:object="${name}" th:method="post">
+        <input th:type="text" name="name" th:method="post" placeholder="Enter name"/>
+        <button type="submit" value="Submit" th:text="'Add User'"></button>
+    </form>
+</body>
+</html>

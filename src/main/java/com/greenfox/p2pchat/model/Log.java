@@ -4,6 +4,9 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 @Entity
 public class Log {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
     private String path;
