@@ -39,15 +39,24 @@ public class ChatController {
     }
 
     @PostMapping("/adduser")
-    public String addUser(@RequestParam("name") String name, HttpServletRequest request) {
+    public String addUser(@RequestParam("name") String name,
+                          Model model,
+                          HttpServletRequest request) {
+        String warnMessage = "";
+
         if (chatUserRepository.findChatUserByName(name) != null) {
             logLevelChecker.printNormalLog(request);
+            warnMessage = "";
             return "redirect:/chat";
-        } else {
+        } else if(name.equals("") || name == null) {
+            warnMessage = "The username field is empty";
+            model.addAttribute("warnMessage", warnMessage);
+            return "enter";
+        } else
             chatUserRepository.save(new ChatUser(name));
             logLevelChecker.printNormalLog(request);
-        }
-        return "redirect:/chat";
+            warnMessage = "";
+            return "redirect:/chat";
     }
 
 }
