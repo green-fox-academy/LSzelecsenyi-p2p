@@ -5,15 +5,11 @@ import com.greenfox.p2pchat.model.Message;
 import com.greenfox.p2pchat.repository.ChatRepository;
 import com.greenfox.p2pchat.repository.LogRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping({"", "/"})
@@ -25,7 +21,6 @@ public class RestCont {
     @Autowired
     private LogRepository logRepository;
 
-    private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/savemessage")
     public Message postMessage(@RequestParam("message") String message) {
@@ -35,7 +30,8 @@ public class RestCont {
     }
 
     @RequestMapping("/seelog")
-    public String home(HttpServletRequest request) {
+    public String showLog(HttpServletRequest request,
+                       @RequestParam("content") String content) {
         Log log = new Log(request);
         logRepository.save(log);
         System.out.println(log);

@@ -1,6 +1,7 @@
 package com.greenfox.p2pchat.model;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class Log {
     }
 
     public Log(HttpServletRequest request) {
-        this.path = request.getContextPath();
+        this.path = request.getServletPath();
         this.method = request.getMethod();
         this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
         this.logLevel = System.getenv("CHAT_APP_LOGLEVEL");
@@ -37,7 +38,7 @@ public class Log {
 
     @Override
     public String toString() {
-        return dateTime + " " + requestData + " " + logLevel + " " + path + " " + method + " " + requestData;
+        return dateTime + " " + logLevel + " " + path + " " + method + " " + requestData;
     }
 
     public long getId() {
