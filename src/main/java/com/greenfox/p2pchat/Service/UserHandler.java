@@ -1,7 +1,7 @@
 package com.greenfox.p2pchat.Service;
 
 import com.greenfox.p2pchat.model.ChatUser;
-import com.greenfox.p2pchat.repository.ChatUserRepository;
+import com.greenfox.p2pchat.repository.ChatUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,17 @@ import org.springframework.stereotype.Service;
 public class UserHandler {
 
     @Autowired
-    ChatUserRepository chatUserRepository;
+    ChatUserRepo chatUserRepository;
 
     private ChatUser activeUser;
+
+    public ChatUserRepo getChatUserRepository() {
+        return chatUserRepository;
+    }
+
+    public void setChatUserRepository(ChatUserRepo chatUserRepository) {
+        this.chatUserRepository = chatUserRepository;
+    }
 
     public ChatUser getActiveUser() {
         return activeUser;

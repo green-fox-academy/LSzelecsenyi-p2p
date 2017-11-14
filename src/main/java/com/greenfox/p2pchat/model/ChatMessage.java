@@ -1,51 +1,41 @@
 package com.greenfox.p2pchat.model;
 
-import com.greenfox.p2pchat.Service.MessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Random;
 
+@Component
 @Entity
+@Table(name = "messages")
 public class ChatMessage {
 
-    @Autowired
-    MessageHandler messageHandler;
-
     @Id
-    private Integer id;
-    private ChatUser chatUser;
+    private long id;
     private String text;
-    private LocalDateTime timestamp;
-
-    public ChatMessage(ChatUser chatUser, String text) {
-        this.chatUser = chatUser;
-        this.text = text;
-        id = messageHandler.getRandomInt();
-        timestamp = LocalDateTime.now();
-    }
+    private String chatUser;
+    private Timestamp timestamp;
 
     public ChatMessage() {
+
     }
 
-    public Integer getId() {
+    public ChatMessage(String text, String chatUser) {
+        this.text = text;
+        this.chatUser = chatUser;
+        this.id = 1000000 + (long) (Math.random() * (9999999L - 1000000L));
+        timestamp = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public ChatUser getUser() {
-        return chatUser;
-    }
-
-    public void setUser(String user) {
-        this.chatUser = chatUser;
     }
 
     public String getText() {
@@ -56,11 +46,29 @@ public class ChatMessage {
         this.text = text;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getChatUser() {
+        return chatUser;
+    }
+
+    public void setChatUser(String chatUser) {
+        this.chatUser = chatUser;
+    }
+
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "ChatMessage{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", chatUser='" + chatUser + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

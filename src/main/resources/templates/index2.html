@@ -5,7 +5,6 @@
         <title>Title</title>
     </head>
     <body>
-    <p th:text="'Active user:' + ${activeUser.name}"></p>
     <h1>Peer to Peer Chat Program</h1>
         <form th:action="@{/chat/edituser}" th:object="${activeUser}" th:method="post">
            <input th:type="text" name="name" th:placeholder="${activeUser.name}"/>
@@ -15,10 +14,27 @@
             <textarea rows="2" cols="40" name="text"/>
             <button type="submit" value="Submit" th:text="'Send Message'"></button>
         </form>
-        <ul th:each="user : ${users}">
-            <li th:text="'Users:' + ${user.name}"></li>
+    <table class="todolist">
+        <thead>
+        <tr align="left">
+            <th width="70px">User</th>
+            <th width="150px">Message</th>
+            <th width="80px">Timestamp</th>
+            <th width="80px">MsgId</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.chatUser}"></td>
+            <td th:text="${message.text}"></td>
+            <td th:text="${message.timestamp}"></td>
+            <td th:text="${message.id}"></td>
+         </tr>
+        </tbody>
+    </table>
+        <ul th:each="user : ${users}" th:text="'Users:'">
+            <li th:text="${user.name}"></li>
         </ul>
         <a href="/chat/enter"></a>
-
     </body>
 </html>

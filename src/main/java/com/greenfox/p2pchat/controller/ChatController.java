@@ -4,8 +4,8 @@ import com.greenfox.p2pchat.Service.LogLevelChecker;
 import com.greenfox.p2pchat.Service.UserHandler;
 import com.greenfox.p2pchat.model.ChatMessage;
 import com.greenfox.p2pchat.model.ChatUser;
-import com.greenfox.p2pchat.repository.ChatUserRepository;
-import com.greenfox.p2pchat.repository.MessageRepository;
+import com.greenfox.p2pchat.repository.ChatUserRepo;
+import com.greenfox.p2pchat.repository.MsgRepo;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController {
 
     @Autowired
-    ChatUserRepository chatUserRepository;
+    ChatUserRepo chatUserRepository;
 
     @Autowired
     LogLevelChecker logLevelChecker;
@@ -26,12 +26,13 @@ public class ChatController {
     UserHandler userHandler;
 
     @Autowired
-    MessageRepository messageRepository;
+    MsgRepo msgRepo;
 
     @RequestMapping({"/", ""})
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("users", chatUserRepository.findAll());
         model.addAttribute("activeUser", userHandler.getActiveUser());
+        model.addAttribute("messages", msgRepo.findAll());
         logLevelChecker.printNormalLog(request);
         if (chatUserRepository.count() == 0){
             return "enter2";
@@ -48,7 +49,7 @@ public class ChatController {
     public String addUser(@RequestParam("name") String name,
                           Model model,
                           HttpServletRequest request) {
-        model.addAttribute("messages", messageRepository.findAll());
+        model.addAttribute("messages", msgRepo.findAll());
         String warnMessage = "";
         if (userHandler.checkExistingUser(name)) {
             userHandler.setActiveUser(chatUserRepository.findChatUserByName(name));
@@ -76,10 +77,12 @@ public class ChatController {
     }
 
     @PostMapping("/addmessage")
-    public String addMessage(@RequestParam("text") String text, HttpServletRequest request) {
-        messageRepository.save(new ChatMessage(userHandler.getActiveUser(), text));
+    public String addMessage(@RequestParam("text") String text,Model model, HttpServletRequest request) {
+        model.addAttribute("activeUser", userHandler.getActiveUser());
+        model.addAttribute("users", chatUserRepository.findAll());
+        msgRepo.save(new ChatMessage(text, userHandler.getActiveUser().toString()));
         logLevelChecker.printNormalLog(request);
-        return "index2";
+        return "redirect:/chat";
     }
 
 }
