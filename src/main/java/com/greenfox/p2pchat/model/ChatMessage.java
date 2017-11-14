@@ -18,12 +18,12 @@ public class ChatMessage {
 
     @Id
     private Integer id;
-    private String user;
+    private ChatUser chatUser;
     private String text;
     private LocalDateTime timestamp;
 
-    public ChatMessage(String user, String text) {
-        this.user = user;
+    public ChatMessage(ChatUser chatUser, String text) {
+        this.chatUser = chatUser;
         this.text = text;
         id = messageHandler.getRandomInt();
         timestamp = LocalDateTime.now();
@@ -40,12 +40,12 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public ChatUser getUser() {
+        return chatUser;
     }
 
     public void setUser(String user) {
-        this.user = user;
+        this.chatUser = chatUser;
     }
 
     public String getText() {
