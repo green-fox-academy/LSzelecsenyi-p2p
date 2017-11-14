@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Title</title>
-    </head>
-    <body>
-        <h1>Peer to Peer Chat Program</h1>
-        <!--<form th:action="@{/chat/edituser}" th:object="${user}" th:method="post">
-            <input th:type="text" th:field="*{name}" th:method="post" placeholder="user.name"/>
-            <button type="submit" value="Submit" th:text="'Change User'"></button>
-        </form>-->
-        <ul th:each="user : ${users}">
-            <li th:text="${user.name}"></li>
-        </ul>
-        <a href="/chat/enter"></a>
-
-    </body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+<head>
+    <title>P2P Chat</title>
+    <link rel="stylesheet" href="/css/enter.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Peer to Peer Chat Program</h1>
+    <form th:action="@{/chat/edituser}" th:object="${user}" th:method="post">
+        <input th:type="text" th:field="*{name}" th:method="post" placeholder="user.name"/>
+        <button type="submit" value="Submit" th:text="'Change User'"></button>
+    </form>
+    <ul th:each="user : ${users}">
+        <li th:text="${user.name}"></li>
+    </ul>
+    <a href="/chat/enter"></a>
+</div>
+</body>
+<th:block layout:fragment="scripts">
+    <script src="/js/hello.js"></script>
+</th:block>
 </html>
