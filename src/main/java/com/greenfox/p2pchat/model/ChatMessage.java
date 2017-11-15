@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ChatMessage {
 
     @Id
-    private long id;
+    private Long id;
     private String text;
     private String chatUser;
     private Timestamp timestamp;
@@ -30,11 +30,18 @@ public class ChatMessage {
         timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    public ChatMessage(Long id, String text, String chatUser, Timestamp timestamp) {
+        this.id = id;
+        this.text = text;
+        this.chatUser = chatUser;
+        this.timestamp = timestamp;
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,13 +69,4 @@ public class ChatMessage {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "ChatMessage{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", chatUser='" + chatUser + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 }

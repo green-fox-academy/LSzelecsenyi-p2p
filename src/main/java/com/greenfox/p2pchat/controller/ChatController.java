@@ -2,8 +2,7 @@ package com.greenfox.p2pchat.controller;
 
 import com.greenfox.p2pchat.Service.LogLevelChecker;
 import com.greenfox.p2pchat.Service.UserHandler;
-import com.greenfox.p2pchat.model.ChatMessage;
-import com.greenfox.p2pchat.model.ChatUser;
+import com.greenfox.p2pchat.model.*;
 import com.greenfox.p2pchat.repository.ChatUserRepo;
 import com.greenfox.p2pchat.repository.MsgRepo;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/chat")
@@ -33,8 +33,9 @@ public class ChatController {
         model.addAttribute("users", chatUserRepository.findAll());
         model.addAttribute("activeUser", userHandler.getActiveUser());
         model.addAttribute("messages", msgRepo.findAll());
+        model.addAttribute("newMessaage", new ChatMessage());
         logLevelChecker.printNormalLog(request);
-        if (chatUserRepository.count() == 0){
+        if (userHandler.checkActiveUser()){
             return "enter2";
         } else return "index2";
     }
@@ -63,6 +64,7 @@ public class ChatController {
         } else
             chatUserRepository.save(new ChatUser(name));
             userHandler.setActiveUser(chatUserRepository.findChatUserByName(name));
+            System.out.println(userHandler.getActiveUser());
             logLevelChecker.printNormalLog(request);
             return "redirect:/chat";
     }
@@ -77,10 +79,14 @@ public class ChatController {
     }
 
     @PostMapping("/addmessage")
-    public String addMessage(@RequestParam("text") String text,Model model, HttpServletRequest request) {
+    public String addMessage(@RequestParam ChatMessage chatMessage, Model model, HttpServletRequest request) {
         model.addAttribute("activeUser", userHandler.getActiveUser());
         model.addAttribute("users", chatUserRepository.findAll());
-        msgRepo.save(new ChatMessage(text, userHandler.getActiveUser().toString()));
+
+//        msgRepo.save(new ChatMessage(text, userHandler.getActiveUser().toString()));
+        RestTemplate restTemplate = new RestTemplate();
+        JsonObject jsonObject = new JsonObject(chatMessage, new Client("LSzelecsenyi"));
+        ReturnMessage returnMessage = restTemplate.postForObject("http://localhost:8080/api/message/receive", jsonObject, ReturnMessage.class);
         logLevelChecker.printNormalLog(request);
         return "redirect:/chat";
     }

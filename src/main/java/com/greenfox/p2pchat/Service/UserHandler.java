@@ -17,8 +17,16 @@ public class UserHandler {
         return chatUserRepository;
     }
 
-    public void setChatUserRepository(ChatUserRepo chatUserRepository) {
-        this.chatUserRepository = chatUserRepository;
+    public boolean checkEmptyInputField(String field) {
+        return field.equals("");
+    }
+
+    public boolean checkExistingUser(String name) {
+        return chatUserRepository.findChatUserByName(name) != null;
+    }
+
+    public boolean checkActiveUser() {
+        return activeUser == null;
     }
 
     public ChatUser getActiveUser() {
@@ -31,13 +39,5 @@ public class UserHandler {
 
     public void setActiveUser(ChatUser activeUser) {
         this.activeUser = activeUser;
-    }
-
-    public boolean checkEmptyInputField(String field) {
-        return field.equals("");
-    }
-
-    public boolean checkExistingUser(String name) {
-        return chatUserRepository.findChatUserByName(name) != null;
     }
 }

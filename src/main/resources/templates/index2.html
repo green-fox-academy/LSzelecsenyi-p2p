@@ -5,36 +5,20 @@
         <title>Title</title>
     </head>
     <body>
-    <h1>Peer to Peer Chat Program</h1>
+        <h1>Peer to Peer Chat Program</h1>
         <form th:action="@{/chat/edituser}" th:object="${activeUser}" th:method="post">
            <input th:type="text" name="name" th:placeholder="${activeUser.name}"/>
            <button type="submit" value="Submit" th:text="'Change User'"></button>
         </form>
-        <form th:action="@{/chat/addmessage}" th:object="${message}" th:method="post">
-            <textarea rows="2" cols="40" name="text"/>
+        <ul th:each="message : ${messages}">
+            <li th:text="${message.chatUser} + ' says:'"></li>
+            <li th:text="${message.text}" style="list-style: none;"></li>
+        </ul>
+    <form th:action="@{/chat/addmessage}" th:object="${newMessage}" th:method="post">
+            <textarea rows="2" cols="40" th:field="*{text}"/>
+            <!--<input type="hidden" th:field="*{id}"/>-->
+            <input type="hidden" th:="*{chatUser}" th:value="${activeUser.name}"/>
             <button type="submit" value="Submit" th:text="'Send Message'"></button>
         </form>
-    <table class="todolist">
-        <thead>
-        <tr align="left">
-            <th width="70px">User</th>
-            <th width="150px">Message</th>
-            <th width="80px">Timestamp</th>
-            <th width="80px">MsgId</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="message : ${messages}">
-            <td th:text="${message.chatUser}"></td>
-            <td th:text="${message.text}"></td>
-            <td th:text="${message.timestamp}"></td>
-            <td th:text="${message.id}"></td>
-         </tr>
-        </tbody>
-    </table>
-        <ul th:each="user : ${users}" th:text="'Users:'">
-            <li th:text="${user.name}"></li>
-        </ul>
-        <a href="/chat/enter"></a>
     </body>
 </html>
