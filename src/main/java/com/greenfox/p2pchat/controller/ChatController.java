@@ -85,9 +85,10 @@ public class ChatController {
     public String addMessage(@RequestParam(value = "newMessage") String text) {
         ChatMessage message = new ChatMessage(text);
         message.setUsername(userHandler.getActiveUser().getUsername());
-        messageHandler.saveMessage(message);
+        msgRepo.save(message);
         messageHandler.postMessage(message);
         return "redirect:/chat";
     }
+
 
 }
