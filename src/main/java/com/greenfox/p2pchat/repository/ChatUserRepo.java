@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ChatUserRepo extends CrudRepository<ChatUser, Long> {
 
-    public ChatUser findChatUserByName(String name);
+    public ChatUser findByChatUser(String name);
 }

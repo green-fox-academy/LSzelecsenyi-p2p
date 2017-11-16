@@ -11,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
 
     @Autowired
-    ChatUserRepo chatUserRepository;
+    ChatUserRepo chatUserRepo;
 
     @Autowired
     LogLevelChecker logLevelChecker;
@@ -34,7 +33,7 @@ public class ChatController {
 
     @RequestMapping({"/", ""})
     public String index(HttpServletRequest request, Model model) {
-        model.addAttribute("users", chatUserRepository.findAll());
+        model.addAttribute("users", chatUserRepo.findAll());
         model.addAttribute("activeUser", userHandler.getActiveUser());
         model.addAttribute("messages", msgRepo.findAll());
         model.addAttribute("newMessaage", new ChatMessage());
@@ -57,7 +56,7 @@ public class ChatController {
         model.addAttribute("messages", msgRepo.findAll());
         String warnMessage = "";
         if (userHandler.checkExistingUser(name)) {
-            userHandler.setActiveUser(chatUserRepository.findChatUserByName(name));
+            userHandler.setActiveUser(chatUserRepo.findByChatUser(name));
             logLevelChecker.printNormalLog(request);
             return "redirect:/chat";
         } else if(userHandler.checkEmptyInputField(name)) {
@@ -66,8 +65,8 @@ public class ChatController {
             logLevelChecker.printErrorLog(request);
             return "enter2";
         } else
-            chatUserRepository.save(new ChatUser(name));
-            userHandler.setActiveUser(chatUserRepository.findChatUserByName(name));
+            chatUserRepo.save(new ChatUser(name));
+            userHandler.setActiveUser(chatUserRepo.findByChatUser(name));
             System.out.println(userHandler.getActiveUser());
             logLevelChecker.printNormalLog(request);
             return "redirect:/chat";
@@ -77,7 +76,7 @@ public class ChatController {
     public String editUser(@RequestParam("name") String name, Model model, HttpServletRequest request) {
         model.addAttribute("activeUser", userHandler.getActiveUser());
         userHandler.getActiveUser().setUsername(name);
-        chatUserRepository.save(userHandler.getActiveUser());
+        chatUserRepo.save(userHandler.getActiveUser());
         logLevelChecker.printNormalLog(request);
         return "index2";
     }

@@ -1,6 +1,8 @@
 package com.greenfox.p2pchat.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,14 +14,15 @@ public class ChatUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String username;
+    @JsonProperty("username")
+    private String chatUser;
 
     public ChatUser() {
     }
 
-    public ChatUser(String name) {
+    public ChatUser(String username) {
 
-        this.username = name;
+        this.chatUser = username;
     }
 
     public long getId() {
@@ -31,15 +34,15 @@ public class ChatUser {
     }
 
     public String getUsername() {
-        return username;
+        return chatUser;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.chatUser = username;
     }
 
     @Override
     public String toString() {
-        return username;
+        return chatUser;
     }
 }

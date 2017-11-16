@@ -22,7 +22,7 @@ public class UserHandler {
     }
 
     public boolean checkExistingUser(String name) {
-        return chatUserRepository.findChatUserByName(name) != null;
+        return chatUserRepository.findByChatUser(name) != null;
     }
 
     public boolean checkActiveUser() {
