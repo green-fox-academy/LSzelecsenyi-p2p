@@ -11,7 +11,7 @@
            <button type="submit" value="Submit" th:text="'Change User'"></button>
         </form>
         <ul th:each="message : ${messages}">
-            <li th:text="${message.chatUser} + ' says:'"></li>
+            <li th:text="${message.username} + ' says:'"></li>
             <li th:text="${message.text}" style="list-style: none;"></li>
         </ul>
         <form action="/addmessage">

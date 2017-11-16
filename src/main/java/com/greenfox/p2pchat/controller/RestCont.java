@@ -29,7 +29,7 @@ public class RestCont {
     @PostMapping("/api/message/receive")
     public Object receive(@RequestBody Request jsonObject) {
         ReturnMessage message = new ReturnMessage();
-        if (jsonObject.getChatMessage().getText() != null && jsonObject.getChatMessage().getChatUser() != null && jsonObject.getChatMessage().getTimestamp() != null && jsonObject.getClient().getId() != null) {
+        if (jsonObject.getChatMessage().getText() != null && jsonObject.getChatMessage().getUsername() != null && jsonObject.getChatMessage().getTimestamp() != null && jsonObject.getClient().getId() != null) {
             message.setStatus("ok");
             message.setMessage("");
             return message;
@@ -39,7 +39,7 @@ public class RestCont {
             if (jsonObject.getChatMessage().getText() == null) {
                 message.setMessage(message.getMessage() + " chatMessage.text");
             }
-            if (jsonObject.getChatMessage().getChatUser() == null) {
+            if (jsonObject.getChatMessage().getUsername() == null) {
                 message.setMessage(message.getMessage() + " chatMessage.chatUser");
             }
             if (jsonObject.getChatMessage().getTimestamp() == null) {

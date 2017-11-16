@@ -16,7 +16,7 @@ public class ChatMessage {
     @Id
     private Long id;
     private String text;
-    private String chatUser;
+    private String username;
     private Timestamp timestamp;
 
     public ChatMessage() {
@@ -29,7 +29,7 @@ public class ChatMessage {
 
     public ChatMessage(String text, String chatUser) {
         this.text = text;
-        this.chatUser = chatUser;
+        this.username = chatUser;
         this.id = 1000000 + (long) (Math.random() * (9999999L - 1000000L));
         timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
@@ -37,11 +37,11 @@ public class ChatMessage {
     public ChatMessage(Long id, String text, String chatUser, Timestamp timestamp) {
         this.id = id;
         this.text = text;
-        this.chatUser = chatUser;
+        this.username = chatUser;
         this.timestamp = timestamp;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -57,12 +57,12 @@ public class ChatMessage {
         this.text = text;
     }
 
-    public String getChatUser() {
-        return chatUser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setChatUser(String chatUser) {
-        this.chatUser = chatUser;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Timestamp getTimestamp() {
@@ -72,5 +72,4 @@ public class ChatMessage {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-
 }
