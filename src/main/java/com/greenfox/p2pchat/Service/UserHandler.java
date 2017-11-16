@@ -34,7 +34,7 @@ public class UserHandler {
     }
 
     public String getActiveUserName() {
-        return activeUser.getName();
+        return activeUser.getUsername();
     }
 
     public void setActiveUser(ChatUser activeUser) {

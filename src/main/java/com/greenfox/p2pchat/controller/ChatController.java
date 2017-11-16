@@ -76,7 +76,7 @@ public class ChatController {
     @PostMapping("/edituser")
     public String editUser(@RequestParam("name") String name, Model model, HttpServletRequest request) {
         model.addAttribute("activeUser", userHandler.getActiveUser());
-        userHandler.getActiveUser().setName(name);
+        userHandler.getActiveUser().setUsername(name);
         chatUserRepository.save(userHandler.getActiveUser());
         logLevelChecker.printNormalLog(request);
         return "index2";
@@ -85,7 +85,7 @@ public class ChatController {
     @PostMapping("/addmessage")
     public String addMessage(@RequestParam(value = "newMessage") String text) {
         ChatMessage message = new ChatMessage(text);
-        message.setChatUser(userHandler.getActiveUser().getName());
+        message.setUsername(userHandler.getActiveUser().getUsername());
         messageHandler.saveMessage(message);
         messageHandler.postMessage(message);
         return "redirect:/chat";
