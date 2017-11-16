@@ -27,17 +27,17 @@ public class ChatMessage {
         this.text = text;
     }
 
-    public ChatMessage(String text, String chatUser) {
+    public ChatMessage(String text, String username) {
         this.text = text;
-        this.username = chatUser;
+        this.username = username;
         this.id = 1000000 + (long) (Math.random() * (9999999L - 1000000L));
         timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public ChatMessage(Long id, String text, String chatUser, Timestamp timestamp) {
+    public ChatMessage(Long id, String text, String username, Timestamp timestamp) {
         this.id = id;
         this.text = text;
-        this.username = chatUser;
+        this.username = username;
         this.timestamp = timestamp;
     }
 
