@@ -3,7 +3,7 @@ package com.greenfox.p2pchat.model;
 public class Client {
 
     public Client() {
-        this.id = "CHAT_APP_UNIQUE_ID";
+        this.id = System.getenv("CHAT_APP_UNIQUE_ID");
     }
 
     public Client(String id) {

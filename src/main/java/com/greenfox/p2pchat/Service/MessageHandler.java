@@ -22,7 +22,7 @@ public class MessageHandler {
     public void postMessage(ChatMessage message) {
         Request request = new Request(message, new Client());
         RestTemplate template = new RestTemplate();
-        String url = System.getenv("CHAT_APP_PEER_ADDRESSS");
+        String url = System.getenv("CHAT_APP_PEER_ADDRESS");
         ReturnMessage response = template.postForObject(url, request, ReturnMessage.class);
         System.out.println(response.getStatus());
         System.out.println(response.getMessage());

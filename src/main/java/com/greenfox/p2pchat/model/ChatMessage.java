@@ -8,7 +8,6 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Component
 @Entity
 @Table(name = "messages")
 public class ChatMessage {
@@ -16,6 +15,15 @@ public class ChatMessage {
     @Id
     private Long id;
     private String text;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     private String username;
     private Timestamp timestamp;
 
@@ -55,14 +63,6 @@ public class ChatMessage {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public Timestamp getTimestamp() {

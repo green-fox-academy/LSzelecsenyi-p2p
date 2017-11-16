@@ -56,7 +56,7 @@ public class ChatController {
         model.addAttribute("messages", msgRepo.findAll());
         String warnMessage = "";
         if (userHandler.checkExistingUser(name)) {
-            userHandler.setActiveUser(chatUserRepo.findByChatUser(name));
+            userHandler.setActiveUser(chatUserRepo.findByUsername(name));
             logLevelChecker.printNormalLog(request);
             return "redirect:/chat";
         } else if(userHandler.checkEmptyInputField(name)) {
@@ -66,14 +66,14 @@ public class ChatController {
             return "enter2";
         } else
             chatUserRepo.save(new ChatUser(name));
-            userHandler.setActiveUser(chatUserRepo.findByChatUser(name));
+            userHandler.setActiveUser(chatUserRepo.findByUsername(name));
             System.out.println(userHandler.getActiveUser());
             logLevelChecker.printNormalLog(request);
             return "redirect:/chat";
     }
 
     @PostMapping("/edituser")
-    public String editUser(@RequestParam("name") String name, Model model, HttpServletRequest request) {
+    public String editUser(@RequestParam("username") String name, Model model, HttpServletRequest request) {
         model.addAttribute("activeUser", userHandler.getActiveUser());
         userHandler.getActiveUser().setUsername(name);
         chatUserRepo.save(userHandler.getActiveUser());
