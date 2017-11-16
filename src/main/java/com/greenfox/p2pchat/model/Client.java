@@ -2,6 +2,15 @@ package com.greenfox.p2pchat.model;
 
 public class Client {
 
+    public Client() {
+        this.id = "CHAT_APP_UNIQUE_ID";
+    }
+
+    public Client(String id) {
+
+        this.id = id;
+    }
+
     private String id;
 
     public String getId() {
@@ -12,12 +21,5 @@ public class Client {
         this.id = id;
     }
 
-    public Client() {
 
-    }
-
-    public Client(String id) {
-
-        this.id = id;
-    }
 }

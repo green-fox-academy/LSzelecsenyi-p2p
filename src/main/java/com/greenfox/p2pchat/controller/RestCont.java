@@ -25,51 +25,31 @@ public class RestCont {
         logLevelChecker.printNormalLog(request);
     }
 
+    @CrossOrigin("*")
     @PostMapping("/api/message/receive")
-    public Object receive(@RequestBody JsonObject jsonObject) {
+    public Object receive(@RequestBody Request jsonObject) {
         ReturnMessage message = new ReturnMessage();
-        if (!jsonObject.getChatMessage().getText().equals("") && !jsonObject.getChatMessage().getChatUser().equals("") && !jsonObject.getChatMessage().getTimestamp().equals("") && !jsonObject.getClient().getId().equals("")) {
+        if (jsonObject.getChatMessage().getText() != null && jsonObject.getChatMessage().getChatUser() != null && jsonObject.getChatMessage().getTimestamp() != null && jsonObject.getClient().getId() != null) {
             message.setStatus("ok");
             message.setMessage("");
             return message;
         } else {
             message.setMessage("Missing Field(s): ");
             message.setStatus("Error");
-            if (jsonObject.getChatMessage().getText().equals("")) {
+            if (jsonObject.getChatMessage().getText() == null) {
                 message.setMessage(message.getMessage() + " chatMessage.text");
             }
-            if (jsonObject.getChatMessage().getChatUser().equals("")) {
+            if (jsonObject.getChatMessage().getChatUser() == null) {
                 message.setMessage(message.getMessage() + " chatMessage.chatUser");
             }
             if (jsonObject.getChatMessage().getTimestamp() == null) {
                 message.setMessage(message.getMessage() + " chatMessage.timestamp");
             }
-            if (jsonObject.getClient().getId().equals("")) {
+            if (jsonObject.getClient().getId() == null) {
                 message.setMessage(message.getMessage() + " client.id");
             }
             return message;
         }
     }
-
-//    HttpStatus.OK
-//    @ExceptionHandler(MissingServletRequestParameterException.class)
-//    public ReturnMessage paramError (MissingServletRequestParameterException missingParam){
-//        ReturnMessage response = new ReturnMessage();
-//        response.setMessage("Missing field(s): ");
-//        if (missingParam.getParameterName().equals("timestamp")) {
-//            response.setMessage(response.getMessage() + " message.timestamp");
-//        } else if (missingParam.getParameterName().equals("text")) {
-//            response.setMessage(response.getMessage() + " message.text");
-//        } else if (missingParam.getParameterName().equals("chatUser")) {
-//            response.setMessage(response.getMessage() + " message.chatUser");
-//        } else if (missingParam.getParameterName().equals("id")) {
-//            response.setMessage(response.getMessage() + " message.id");
-//        } else if (missingParam.getParameterName().equals("clientId")) {
-//            response.setMessage(response.getMessage() + " client.id");
-//        }
-//        return response;
-//    }
-
-
 
 }

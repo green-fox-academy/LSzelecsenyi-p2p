@@ -1,14 +1,14 @@
 package com.greenfox.p2pchat.model;
 
-public class JsonObject {
+public class Request {
 
     private ChatMessage chatMessage;
     private Client client;
 
-    public JsonObject() {
+    public Request() {
     }
 
-    public JsonObject(ChatMessage chatMessage, Client client) {
+    public Request(ChatMessage chatMessage, Client client) {
         this.chatMessage = chatMessage;
         this.client = client;
     }

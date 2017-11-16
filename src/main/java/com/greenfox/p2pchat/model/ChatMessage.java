@@ -23,6 +23,10 @@ public class ChatMessage {
 
     }
 
+    public ChatMessage(String text) {
+        this.text = text;
+    }
+
     public ChatMessage(String text, String chatUser) {
         this.text = text;
         this.chatUser = chatUser;

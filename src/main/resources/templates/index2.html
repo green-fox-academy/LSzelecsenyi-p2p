@@ -14,11 +14,9 @@
             <li th:text="${message.chatUser} + ' says:'"></li>
             <li th:text="${message.text}" style="list-style: none;"></li>
         </ul>
-    <form th:action="@{/chat/addmessage}" th:object="${newMessage}" th:method="post">
-            <textarea rows="2" cols="40" th:field="*{text}"/>
-            <!--<input type="hidden" th:field="*{id}"/>-->
-            <input type="hidden" th:="*{chatUser}" th:value="${activeUser.name}"/>
-            <button type="submit" value="Submit" th:text="'Send Message'"></button>
+        <form action="/addmessage">
+            <textarea name="newMessage" rows="5" cols="30"></textarea>
+            <input type="submit" value="Send"/>
         </form>
     </body>
 </html>

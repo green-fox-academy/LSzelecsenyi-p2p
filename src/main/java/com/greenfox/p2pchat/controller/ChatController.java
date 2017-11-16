@@ -1,6 +1,7 @@
 package com.greenfox.p2pchat.controller;
 
 import com.greenfox.p2pchat.Service.LogLevelChecker;
+import com.greenfox.p2pchat.Service.MessageHandler;
 import com.greenfox.p2pchat.Service.UserHandler;
 import com.greenfox.p2pchat.model.*;
 import com.greenfox.p2pchat.repository.ChatUserRepo;
@@ -27,6 +28,9 @@ public class ChatController {
 
     @Autowired
     MsgRepo msgRepo;
+
+    @Autowired
+    MessageHandler messageHandler;
 
     @RequestMapping({"/", ""})
     public String index(HttpServletRequest request, Model model) {
@@ -79,15 +83,11 @@ public class ChatController {
     }
 
     @PostMapping("/addmessage")
-    public String addMessage(@RequestParam ChatMessage chatMessage, Model model, HttpServletRequest request) {
-        model.addAttribute("activeUser", userHandler.getActiveUser());
-        model.addAttribute("users", chatUserRepository.findAll());
-
-//        msgRepo.save(new ChatMessage(text, userHandler.getActiveUser().toString()));
-        RestTemplate restTemplate = new RestTemplate();
-        JsonObject jsonObject = new JsonObject(chatMessage, new Client("LSzelecsenyi"));
-        ReturnMessage returnMessage = restTemplate.postForObject("http://localhost:8080/api/message/receive", jsonObject, ReturnMessage.class);
-        logLevelChecker.printNormalLog(request);
+    public String addMessage(@RequestParam(value = "newMessage") String text) {
+        ChatMessage message = new ChatMessage(text);
+        message.setChatUser(userHandler.getActiveUser().getName());
+        messageHandler.saveMessage(message);
+        messageHandler.postMessage(message);
         return "redirect:/chat";
     }
 
